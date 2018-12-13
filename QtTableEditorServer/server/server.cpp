@@ -13,6 +13,23 @@ Server::Server(QWidget *parent)
 
 void Server::runServer()
 {
+    QHostAddress ipAddress = QHostAddress::Any;
+
+    if (!listen(ipAddress))
+    {
+        QString strError = errorString();
+        emit serverMessage( tr("Could not start server: %1")
+                            .arg(strError) );
+        stopServer();
+    }
+    else
+    {
+        emit serverMessage(tr("Server successfully started at:%1:%2")
+                           .arg(serverAddress().toString())
+                           .arg(QString::number(serverPort())));
+    }
+
+    /*
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
     foreach (QHostAddress ipAddress, ipAddressesList)
     {
@@ -20,36 +37,39 @@ void Server::runServer()
         {
             if (!listen(ipAddress))
             {
-                emit serverMessage(tr("Невозможно запустить сервер: %1").arg(errorString()));
+                QString strError = errorString();
+                emit serverMessage( tr("Could not start server: %1")
+                                    .arg(strError) );
                 stopServer();
             }
             else
             {
-                emit serverMessage(tr("Сервер успешно запущен по адресу: %1:%2")
+                emit serverMessage(tr("Server successfully started at:%1:%2")
                                    .arg(serverAddress().toString())
                                    .arg(QString::number(serverPort())));
             }
         }
     }
+    */
 }
 
 void Server::stopServer()
 {
     emit serverClosed();
     close();
-    emit serverMessage(tr("Сервер успешно остановлен"));
+    emit serverMessage(tr("Server successfully stopped"));
 }
 
 void Server::clientConnected(const QHostAddress& clientAddress, quint16 clientPort)
 {
-    emit serverMessage(tr("Клиент подключился: %1:%2")
+    emit serverMessage(tr("Client connected:%1:%2")
                        .arg(clientAddress.toString())
                        .arg(QString::number(clientPort)));
 }
 
 void Server::clientDisconnected(const QHostAddress& clientAddress, quint16 clientPort)
 {
-    emit serverMessage(tr("Клиент отключился: %1:%2").
+    emit serverMessage(tr("Client disconnected:%1:%2").
                        arg(clientAddress.toString()).
                        arg(QString::number(clientPort)));
 }
@@ -57,7 +77,7 @@ void Server::clientDisconnected(const QHostAddress& clientAddress, quint16 clien
 void Server::requestReceived(const QString& request)
 {
     auto client = qobject_cast<ThreadableClientWrapper *>(QObject::sender());
-    emit serverMessage(tr("[%1:%2] Получен запрос: %3")
+    emit serverMessage(tr("[%1:%2] Request received:%3")
                        .arg(client->getClientAddress().toString())
                        .arg(QString::number(client->getClientPort()))
                        .arg(request));
@@ -66,7 +86,7 @@ void Server::requestReceived(const QString& request)
 void Server::responseSent(const QString &response)
 {
     auto client = qobject_cast<ThreadableClientWrapper *>(QObject::sender());
-    emit serverMessage(tr("[%1:%2] Отправлен ответ: %3")
+    emit serverMessage(tr("[%1:%2] Responded:%3")
                        .arg(client->getClientAddress().toString())
                        .arg(QString::number(client->getClientPort()))
                        .arg(response));

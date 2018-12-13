@@ -67,10 +67,10 @@ void MultipageTable::initTable()
     table->setColumnCount(TOTAL_COLUMNS);
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    QTableWidgetItem *firstColumnTitle = new QTableWidgetItem(tr("ФИО"));
-    QTableWidgetItem *secondColumnTitle = new QTableWidgetItem(tr("Дата рождения"));
-    QTableWidgetItem *thirdColumnTitle = new QTableWidgetItem(tr("Дата поступления"));
-    QTableWidgetItem *fourthColumnTitle = new QTableWidgetItem(tr("Дата окончания"));
+    QTableWidgetItem *firstColumnTitle = new QTableWidgetItem(tr("FIO"));
+    QTableWidgetItem *secondColumnTitle = new QTableWidgetItem(tr("Date of Birth"));
+    QTableWidgetItem *thirdColumnTitle = new QTableWidgetItem(tr("receipt date"));
+    QTableWidgetItem *fourthColumnTitle = new QTableWidgetItem(tr("expiration date"));
     table->setHorizontalHeaderItem(0, firstColumnTitle);
     table->setHorizontalHeaderItem(1, secondColumnTitle);
     table->setHorizontalHeaderItem(2, thirdColumnTitle);

@@ -29,67 +29,67 @@ MainWindow::~MainWindow()
 
 void MainWindow::createActions()
 {
-    openFileAction = new QAction(QIcon(":/icons/icon_open_file.png"), tr("Открыть файл"), this);
+    openFileAction = new QAction(QIcon(":/icons/icon_open_file.png"), tr("Open file"), this);
     openFileAction->setShortcut(QKeySequence::Open);
-    openFileAction->setStatusTip(tr("Открыть файл с таблицей студентов"));
+    openFileAction->setStatusTip(tr("Open the file with the table of students"));
     connect(openFileAction, SIGNAL(triggered(bool)), this, SLOT(requestOpenFile()));
 
-    saveFileAction = new QAction(QIcon(":/icons/icon_save_file.png"), tr("Сохранить файл"), this);
+    saveFileAction = new QAction(QIcon(":/icons/icon_save_file.png"), tr("Save file"), this);
     saveFileAction->setShortcut(QKeySequence::Save);
-    saveFileAction->setStatusTip(tr("Сохранить текущую таблицу студентов"));
+    saveFileAction->setStatusTip(tr("Save current student table"));
     connect(saveFileAction, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
 
-    saveAsAction = new QAction(QIcon(":/icons/icon_save_as_file.png"), tr("Сохранить как ..."), this);
+    saveAsAction = new QAction(QIcon(":/icons/icon_save_as_file.png"), tr("Save as ..."), this);
     saveAsAction->setShortcut(QKeySequence::SaveAs);
-    saveAsAction->setStatusTip(tr("Сохранить текущую таблицу студентов в новый файл"));
+    saveAsAction->setStatusTip(tr("Save the current student table to a new file."));
     connect(saveAsAction, SIGNAL(triggered(bool)), this, SLOT(saveFileAs()));
 
-    addStudentAction = new QAction(QIcon(":/icons/icon_add.png"), tr("Добавить запись"), this);
+    addStudentAction = new QAction(QIcon(":/icons/icon_add.png"), tr("Add a note"), this);
     addStudentAction->setShortcut(Qt::Key_1);
-    addStudentAction->setStatusTip(tr("Добавить в таблицу новую запись с информацией о студенте"));
+    addStudentAction->setStatusTip(tr("Add a new student record to the table"));
     connect(addStudentAction, SIGNAL(triggered(bool)), this, SLOT(showAddDialog()));
 
-    findStudentAction = new QAction(QIcon(":/icons/icon_find.png"), tr("Найти записи"), this);
+    findStudentAction = new QAction(QIcon(":/icons/icon_find.png"), tr("Find records"), this);
     findStudentAction->setShortcut(Qt::Key_2);
-    findStudentAction->setStatusTip(tr("Найти записи о студентах по заданным критериям"));
+    findStudentAction->setStatusTip(tr("Find student records by specified criteria"));
     connect(findStudentAction, SIGNAL(triggered(bool)), this, SLOT(showSearchDialog()));
 
-    deleteStudentAction = new QAction(QIcon(":/icons/icon_delete.png"), tr("Удалить записи"), this);
+    deleteStudentAction = new QAction(QIcon(":/icons/icon_delete.png"), tr("Delete records"), this);
     deleteStudentAction->setShortcut(Qt::Key_3);
-    deleteStudentAction->setStatusTip(tr("Найти и удалить записи о студентах по заданным критериям"));
+    deleteStudentAction->setStatusTip(tr("Find and delete student records by specified criteria"));
     connect(deleteStudentAction, SIGNAL(triggered(bool)), this, SLOT(showDeleteDialog()));
 
-    connectToServerAction = new QAction(QIcon(":/icons/icon_no_connection.png"), tr("Подключиться к серверу"), this);
+    connectToServerAction = new QAction(QIcon(":/icons/icon_no_connection.png"), tr("Connect to server"), this);
     connectToServerAction->setShortcut(Qt::Key_4);
-    connectToServerAction->setStatusTip(tr("Подключиться к удаленному серверу"));
+    connectToServerAction->setStatusTip(tr("Connect to remote server"));
     connect(connectToServerAction, SIGNAL(triggered(bool)), this, SLOT(showServerDialog()));
 
-    aboutQtAction = new QAction(tr("О Qt"), this);
-    aboutQtAction->setStatusTip(tr("Показать справочную информацию о библиотеке Qt"));
+    aboutQtAction = new QAction(tr("About Qt"), this);
+    aboutQtAction->setStatusTip(tr("Display Qt Library Reference"));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 }
 
 void MainWindow::createMenus()
 {
-    fileMenu = menuBar()->addMenu(tr("Файл"));
+    fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(openFileAction);
     fileMenu->addAction(saveFileAction);
     fileMenu->addAction(saveAsAction);
     fileMenu->addSeparator();
     fileMenu->addAction(connectToServerAction);
 
-    editMenu = menuBar()->addMenu(tr("Редактировать"));
+    editMenu = menuBar()->addMenu(tr("Edit"));
     editMenu->addAction(addStudentAction);
     editMenu->addAction(findStudentAction);
     editMenu->addAction(deleteStudentAction);
 
-    helpMenu = menuBar()->addMenu(tr("Справка"));
+    helpMenu = menuBar()->addMenu(tr("reference"));
     helpMenu->addAction(aboutQtAction);
 }
 
 void MainWindow::createToolBars()
 {
-    fileToolBar = new QToolBar(tr("Работа с файлом"));
+    fileToolBar = new QToolBar(tr("Work with file"));
     fileToolBar->setIconSize(QSize(40, 40));
     fileToolBar->addAction(openFileAction);
     fileToolBar->addAction(saveFileAction);
@@ -98,7 +98,7 @@ void MainWindow::createToolBars()
     fileToolBar->addAction(connectToServerAction);
     addToolBar(fileToolBar);
 
-    editToolBar = new QToolBar(tr("Редактировать"));
+    editToolBar = new QToolBar(tr("Edit"));
     editToolBar->setIconSize(QSize(40, 40));
     editToolBar->addAction(addStudentAction);
     editToolBar->addAction(findStudentAction);
@@ -127,8 +127,8 @@ void MainWindow::openFile(const QStringList& availableFiles)
                this, SLOT(openFile(QStringList)));
     bool ok;
     QString fileName = QInputDialog::getItem(this,
-                                             tr("Загрузка"),
-                                             tr("Введите имя файла для загрузки:"),
+                                             tr("Loading"),
+                                             tr("Enter the file name to upload:"),
                                              availableFiles,
                                              0,
                                              true,
@@ -153,8 +153,8 @@ void MainWindow::saveFileAs()
 {
     bool ok;
     QString fileName = QInputDialog::getText(this,
-                                             tr("Сохранение"),
-                                             tr("Введите имя файла для сохранения:"),
+                                             tr("Preservation"),
+                                             tr("Enter the name of the file to save:"),
                                              QLineEdit::Normal,
                                              tr("new_file"),
                                              &ok);
@@ -212,7 +212,7 @@ void MainWindow::showServerDialog()
 void MainWindow::lostConnection()
 {
     connectToServerAction->setIcon(QIcon(":/icons/icon_no_connection.png"));
-    QMessageBox::warning(this, tr("Интернет"), tr("Соединение с сервером потеряно!"),
+    QMessageBox::warning(this, tr("the Internet"), tr("Server connection lost!"),
                          QMessageBox::Ok);
 }
 

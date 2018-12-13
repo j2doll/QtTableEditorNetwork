@@ -11,15 +11,15 @@
 ServerWindow::ServerWindow(QWidget *parent)
     : QWidget(parent)
 {
-    runServerButton = new QPushButton(tr("Запустить"));
+    runServerButton = new QPushButton(tr("Launch"));
     runServerButton->setDefault(true);
-    stopServerButton = new QPushButton(tr("Остановить"));
-    clearLogButton = new QPushButton(tr("Очистить лог"));
+    stopServerButton = new QPushButton(tr("Stop"));
+    clearLogButton = new QPushButton(tr("Clear log"));
 
     log = new QPlainTextEdit();
     log->setReadOnly(true);
 
-    serverStatusLabel = new QLabel(tr("не запущен"));
+    serverStatusLabel = new QLabel(tr("not running"));
 
     QHBoxLayout* buttonsLayout = new QHBoxLayout();
     QVBoxLayout* mainLayout = new QVBoxLayout();
@@ -40,13 +40,13 @@ ServerWindow::ServerWindow(QWidget *parent)
     connect(server, SIGNAL(serverMessage(QString)), this, SLOT(showMessage(QString)));
     connect(clearLogButton, SIGNAL(clicked(bool)), log, SLOT(clear()));
 
-    showMessage(tr("Добро пожаловать!"));
+    showMessage(tr("Welcome!"));
 }
 
 void ServerWindow::runServer()
 {
     server->runServer();
-    displayServerStatus(QString("запущен: %1:%2")
+    displayServerStatus(QString("launched:%1:%2")
                         .arg(server->serverAddress().toString())
                         .arg(QString::number(server->serverPort())));
 }
@@ -54,7 +54,7 @@ void ServerWindow::runServer()
 void ServerWindow::stopServer()
 {
     server->stopServer();
-    displayServerStatus("не запущен");
+    displayServerStatus("not running");
 }
 
 void ServerWindow::showMessage(QString message)

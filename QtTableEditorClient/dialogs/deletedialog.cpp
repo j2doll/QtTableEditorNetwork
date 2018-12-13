@@ -32,19 +32,19 @@ void DeleteStudentDialog::notifyDeletion(int amount)
 {
     QString msg;
     if (amount > 0)
-        msg = tr("Удалено ") + QString::number(amount) + tr(" записей");
+        msg = tr("Removed ") + QString::number(amount) + tr(" records");
     else
-        msg = tr("Записей, удовлетворяющих шаблону, не найдено!");
-    QMessageBox::information(this, tr("Результат удаления"), msg, QMessageBox::Ok);
+        msg = tr("No entries were found to match the template!");
+    QMessageBox::information(this, tr("Removal result"), msg, QMessageBox::Ok);
 }
 
 void DeleteStudentDialog::manageButtons()
 {
-    deleteButton = new QPushButton(tr("Удалить"), this);
+    deleteButton = new QPushButton(tr("Delete"), this);
     connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteStudents()));
     deleteButton->setDefault(true);
 
-    cancelButton = new QPushButton(tr("Отмена"), this);
+    cancelButton = new QPushButton(tr("Cancel"), this);
     connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(reject()));
 }
 

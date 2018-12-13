@@ -1,6 +1,8 @@
 #include "database.h"
 #include <math.h>
 
+#include <QDebug>
+
 StudentDatabase::StudentDatabase(QObject *parent)
     : QObject(parent), xml(this)
 {
@@ -106,9 +108,20 @@ bool StudentDatabase::validateStudent(Student::const_ref student) const
     int studentAge = student.getBirthDate().daysTo(QDate::currentDate());
     bool isMature = (studentAge / 365) >= MIN_AGE;
 
-    bool correctDates = student.getEnrollmentDate() < student.getGraduationDate() &&
-                        student.getEnrollmentDate() > student.getBirthDate() &&
-                        student.getGraduationDate() > student.getBirthDate();
+    bool correctDates1 = student.getEnrollmentDate() < student.getGraduationDate() ;
+    bool correctDates2 = student.getEnrollmentDate() > student.getBirthDate() ;
+    bool correctDates3 = student.getGraduationDate() > student.getBirthDate() ;
+
+    bool correctDates = correctDates1 && correctDates2 && correctDates3;
+
+    //bool correctDates = student.getEnrollmentDate() < student.getGraduationDate() &&
+    //                    student.getEnrollmentDate() > student.getBirthDate() &&
+    //                    student.getGraduationDate() > student.getBirthDate();
+
+    qDebug()
+        << hasFirstAndSecondName
+        << isMature
+        << correctDates ;
 
     return hasFirstAndSecondName && isMature && correctDates;
 }

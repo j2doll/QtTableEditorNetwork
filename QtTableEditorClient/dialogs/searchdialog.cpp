@@ -15,11 +15,11 @@ SearchStudentDialog::SearchStudentDialog(DatabaseManager *mng, QWidget *parent)
 
 void SearchStudentDialog::manageButtons()
 {
-    find = new QPushButton(tr("Найти"), this);
+    find = new QPushButton(tr("To find"), this);
     connect(find, SIGNAL(clicked(bool)), this, SLOT(findStudents()));
     find->setDefault(true);
 
-    cancel = new QPushButton(tr("Отмена"), this);
+    cancel = new QPushButton(tr("Cancel"), this);
     connect(cancel, SIGNAL(clicked(bool)), this, SLOT(reject()));
 }
 

@@ -30,22 +30,22 @@ StudentSearchPattern StudentSearchWidget::createPattern() const
 
 void StudentSearchWidget::manageNameFields()
 {
-    firstNameCheckBox = new QCheckBox(tr("Имя"), this);
+    firstNameCheckBox = new QCheckBox(tr("Name"), this);
     firstNameInput = new QLineEdit(this);
-    firstNameInput->setPlaceholderText(tr("Введите имя..."));
+    firstNameInput->setPlaceholderText(tr("Enter your name..."));
 
-    secondNameCheckBox = new QCheckBox(tr("Фамилия"), this);
+    secondNameCheckBox = new QCheckBox(tr("Surname"), this);
     secondNameInput = new QLineEdit(this);
-    secondNameInput->setPlaceholderText(tr("Введите фамилию..."));
+    secondNameInput->setPlaceholderText(tr("Enter the last name ..."));
 
-    middleNameCheckBox = new QCheckBox(tr("Отчество"), this);
+    middleNameCheckBox = new QCheckBox(tr("middle name"), this);
     middleNameInput = new QLineEdit(this);
-    middleNameInput->setPlaceholderText(tr("Введите отчество..."));
+    middleNameInput->setPlaceholderText(tr("Enter the middle name ..."));
 }
 
 void StudentSearchWidget::manageDateFields()
 {
-    birthDateCheckBox = new QCheckBox(tr("Дата рождения"), this);
+    birthDateCheckBox = new QCheckBox(tr("Date of Birth"), this);
 
     birthDateLowerBound = new QDateEdit();
     birthDateLowerBound->setDisplayFormat(Student::DATE_FORMAT);
@@ -63,7 +63,7 @@ void StudentSearchWidget::manageDateFields()
     birthDateHigherBound->setCalendarPopup(true);
     birthDateHigherBound->setCalendarWidget(birthDateHigherBoundCalendar);
 
-    enrollDateCheckBox = new QCheckBox(tr("Дата поступления"), this);
+    enrollDateCheckBox = new QCheckBox(tr("receipt date"), this);
 
     enrollDateLowerBound = new QDateEdit();
     enrollDateLowerBound->setDisplayFormat(Student::DATE_FORMAT);
@@ -81,7 +81,7 @@ void StudentSearchWidget::manageDateFields()
     enrollDateHigherBound->setCalendarPopup(true);
     enrollDateHigherBound->setCalendarWidget(enrollDateHigherBoundCalendar);
 
-    graduateDateCheckBox = new QCheckBox(tr("Дата окончания"), this);
+    graduateDateCheckBox = new QCheckBox(tr("expiration date"), this);
 
     graduateDateLowerBound = new QDateEdit();
     graduateDateLowerBound->setDisplayFormat(Student::DATE_FORMAT);

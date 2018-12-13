@@ -17,11 +17,11 @@ AddStudentDialog::AddStudentDialog(DatabaseManager* mng, QWidget* parent)
     setManager(mng);
 
     firstNameInput = new QLineEdit(this);
-    firstNameInput->setPlaceholderText(tr("Введите имя..."));
+    firstNameInput->setPlaceholderText(tr("Enter your name..."));
     secondNameInput = new QLineEdit(this);
-    secondNameInput->setPlaceholderText(tr("Введите фамилию..."));
+    secondNameInput->setPlaceholderText(tr("Enter the last name ..."));
     middleNameInput = new QLineEdit(this);
-    middleNameInput->setPlaceholderText(tr("Введите отчество..."));
+    middleNameInput->setPlaceholderText(tr("Enter the middle name ..."));
 
     birthDateInput = new QCalendarWidget(this);
     birthDateInput->setGridVisible(true);
@@ -60,26 +60,26 @@ void AddStudentDialog::addStudentToDatabase()
 void AddStudentDialog::notifyInvalidInput()
 {
     QMessageBox::warning(this,
-                         tr("Ошибка"),
-                         tr("Введены некорректные сведения!"),
+                         tr("Mistake"),
+                         tr("Incorrect information entered!"),
                          QMessageBox::Ok);
 }
 
 void AddStudentDialog::notifyDuplication()
 {
     QMessageBox::warning(this,
-                         tr("Ошибка"),
-                         tr("Запись о таком студенте уже существует!"),
+                         tr("Mistake"),
+                         tr("A record of such a student already exists!"),
                          QMessageBox::Ok);
 }
 
 void AddStudentDialog::manageButtons()
 {
-    ok = new QPushButton(tr("Добавить"), this);
+    ok = new QPushButton(tr("To add"), this);
     connect(ok, SIGNAL(clicked(bool)), this, SLOT(addStudentToDatabase()));
     ok->setDefault(true);
 
-    cancel = new QPushButton(tr("Отмена"), this);
+    cancel = new QPushButton(tr("Cancel"), this);
     connect(cancel, SIGNAL(clicked(bool)), this, SLOT(reject()));
 }
 
@@ -109,10 +109,10 @@ void AddStudentDialog::manageLayouts()
 
 void AddStudentDialog::manageDateSwitcher()
 {
-    dateSwitcher = new QGroupBox(tr("Выберите дату:"), this);
-    QRadioButton* birthDateButton = new QRadioButton(tr("дата рождения"));
-    QRadioButton* enrollDateButton = new QRadioButton(tr("дата поступления"));
-    QRadioButton* graduateDateButton = new QRadioButton(tr("дата окончания"));
+    dateSwitcher = new QGroupBox(tr("Select a date:"), this);
+    QRadioButton* birthDateButton = new QRadioButton(tr("Date of Birth"));
+    QRadioButton* enrollDateButton = new QRadioButton(tr("receipt date"));
+    QRadioButton* graduateDateButton = new QRadioButton(tr("expiration date"));
 
     QHBoxLayout* groupBoxLayout = new QHBoxLayout();
     groupBoxLayout->addWidget(birthDateButton);

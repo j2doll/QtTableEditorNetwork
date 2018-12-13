@@ -18,7 +18,7 @@ ConnectToServerDialog::ConnectToServerDialog(DatabaseManager *mng, QWidget *pare
 {
     setManager(mng);
 
-    setWindowTitle(tr("Подключение к серверу"));
+    setWindowTitle(tr("Connect to server"));
     manageInputFields();
     manageButtons();
     manageLayouts();
@@ -51,12 +51,12 @@ void ConnectToServerDialog::connectToServer()
 
     if (!address.toIPv4Address())
     {
-        showMessage(tr("Введен некорректный адрес"));
+        showMessage(tr("Invalid address entered"));
         return;
     }
     if (0 == port)
     {
-        showMessage(tr("Введен некорректный порт"));
+        showMessage(tr("Incorrect port entered"));
         return;
     }
 
@@ -73,19 +73,19 @@ void ConnectToServerDialog::connectionStateChanged(QAbstractSocket::SocketState 
     switch (socketState)
     {
     case QAbstractSocket::HostLookupState:
-        showMessage(tr("Поиск сервера..."));
+        showMessage(tr("Search server ..."));
         break;
     case QAbstractSocket::ConnectingState:
-        showMessage(tr("Сервер найден. Идет подключение..."));
+        showMessage(tr("Server found. Connecting ..."));
         break;
     case QAbstractSocket::ConnectedState:
-        showMessage(tr("Соединение с сервером успешно установлено!"));
+        showMessage(tr("Successfully connected to server!"));
         break;
     case QAbstractSocket::ClosingState:
-        showMessage(tr("Закрытие соединения..."));
+        showMessage(tr("Connection closing ..."));
         break;
     case QAbstractSocket::UnconnectedState:
-        showMessage(tr("Соединение с сервером закрыто."));
+        showMessage(tr("Server connection closed."));
         break;
     }
 }
@@ -102,19 +102,19 @@ void ConnectToServerDialog::connectionError(QAbstractSocket::SocketError socketE
     case QAbstractSocket::RemoteHostClosedError:
         break;
     case QAbstractSocket::HostNotFoundError:
-        showMessage(tr("Сервер не найден. Проверьте правильность IP-адреса и порта."));
+        showMessage(tr("Server not found. Check the correct IP address and port."));
         break;
     case QAbstractSocket::ConnectionRefusedError:
-        showMessage(tr("В соединении отказано."));
+        showMessage(tr("Connection refused."));
         break;
     default:
-        showMessage(tr("Произошла ошибка: %1").arg(getManager()->getSocket()->getSocket()->errorString()));
+        showMessage(tr("An error occurred: %1").arg(getManager()->getSocket()->getSocket()->errorString()));
     }
 }
 
 void ConnectToServerDialog::manageInputFields()
 {
-    m_addressLabel = new QLabel(tr("IP-адрес:"));
+    m_addressLabel = new QLabel(tr("IP address:"));
 
     m_addressInput = new QLineEdit();
 
@@ -124,7 +124,7 @@ void ConnectToServerDialog::manageInputFields()
     m_addressInput->setValidator(ipValidator);
     m_addressInput->setInputMask("000.000.000.000;_");
 
-    m_portLabel = new QLabel(tr("Порт:"));
+    m_portLabel = new QLabel(tr("Port:"));
 
     m_portInput = new QLineEdit();
     m_portInput->setValidator(new QIntValidator(1, 65535));
@@ -135,15 +135,15 @@ void ConnectToServerDialog::manageInputFields()
 
 void ConnectToServerDialog::manageButtons()
 {
-    m_connectButton = new QPushButton(tr("Подключиться"));
+    m_connectButton = new QPushButton(tr("Connect"));
     connect(m_connectButton, SIGNAL(clicked(bool)), this, SLOT(connectToServer()));
     m_connectButton->setDefault(true);
 
-    m_disconnectButton = new QPushButton(tr("Отключиться"));
+    m_disconnectButton = new QPushButton(tr("Disconnect"));
     connect(m_disconnectButton, SIGNAL(clicked(bool)), this, SLOT(disconnectFromServer()));
     m_disconnectButton->setDefault(true);
 
-    m_cancelButton = new QPushButton(tr("Назад"));
+    m_cancelButton = new QPushButton(tr("Back"));
     connect(m_cancelButton, SIGNAL(clicked(bool)), this, SLOT(reject()));
 }
 

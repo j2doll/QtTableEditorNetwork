@@ -75,21 +75,21 @@ void ThreadableClientWrapper::parseRequest(TcpSocketAdapter::REQUESTS requestId,
     {
     case Tcp::REQUESTS::ADD_STUDENT:
     {
-        emit requestReceived(tr("добавление записи"));
+        emit requestReceived(tr("adding record"));
         Student student = Student::fromString(data);
         database->addStudent(student);
         break;
     }
     case Tcp::REQUESTS::SEARCH_STUDENTS:
     {
-        emit requestReceived(tr("поиск записей"));
+        emit requestReceived(tr("search records"));
         StudentSearchPattern pattern = StudentSearchPattern::fromString(data);
         database->setSearchPattern(pattern);
         break;
     }
     case Tcp::REQUESTS::REMOVE_STUDENTS:
     {
-        emit requestReceived(tr("удаление записей"));
+        emit requestReceived(tr("deleting records"));
         StudentSearchPattern pattern = StudentSearchPattern::fromString(data);
         database->removeStudents(pattern);
         break;
@@ -97,53 +97,55 @@ void ThreadableClientWrapper::parseRequest(TcpSocketAdapter::REQUESTS requestId,
     case Tcp::REQUESTS::GET_PAGE:
     {
         QStringList numbers = data.split(QChar(' '));
-        emit requestReceived(tr("получение страницы: №%1 (по %2)").arg(numbers[0].toInt()).arg(numbers[1].toInt()));
+        emit requestReceived(tr("page receipt: No.%1 (per%2)")
+                             .arg(numbers[0].toInt())
+                             .arg(numbers[1].toInt()) );
 
         Student::StudentSet page = database->getSetOfStudents(numbers[0].toInt(), numbers[1].toInt());
         socket->sendRequest(Tcp::REQUESTS::GET_PAGE, Student::studentsToString(page));
-        emit responseSent(tr("отправка страницы: размер - %1").arg(QString::number(page.size())));
+        emit responseSent(tr("page submission: size - %1").arg(QString::number(page.size())));
         break;
     }
     case Tcp::REQUESTS::COUNT_PAGES:
     {
-        emit requestReceived(tr("подсчет страниц"));
+        emit requestReceived(tr("page counting"));
         int studentsPerPage = data.toInt();
         int pages = database->countPages(studentsPerPage);
 
         socket->sendRequest(Tcp::REQUESTS::COUNT_PAGES, QString::number(pages));
-        emit responseSent(tr("количество страниц %1").arg(QString::number(pages)));
+        emit responseSent(tr("number of pages %1").arg(QString::number(pages)));
         break;
     }
     case Tcp::REQUESTS::VALIDATE_PAGE:
     {
-        emit requestReceived(tr("проверка страницы"));
+        emit requestReceived(tr("page check"));
         QStringList numbers = data.split(QChar(' '));
         bool isValidPage = database->validatePageBounds(numbers[0].toInt(), numbers[1].toInt());
 
         socket->sendRequest(Tcp::REQUESTS::VALIDATE_PAGE, isValidPage ? "true" : "false");
-        emit responseSent(tr("страница проверена: %1").arg(isValidPage ? "true" : "false"));
+        emit responseSent(tr("verified page:%1").arg(isValidPage ? "true" : "false"));
         break;
     }
     case Tcp::REQUESTS::SAVE_DATABASE:
     {
         QString fileName = data;
-        emit requestReceived(tr("сохранение в файл: %1").arg(fileName));
+        emit requestReceived(tr("save to file: %1").arg(fileName));
         database->getXmlHandler()->writeToFile(fileName);
         break;
     }
     case Tcp::REQUESTS::LOAD_DATABASE:
     {
         QString fileName = data;
-        emit requestReceived(tr("загрузка из файла: %1").arg(fileName));
+        emit requestReceived(tr("Loading from file: %1").arg(fileName));
         database->getXmlHandler()->readFromFile(fileName);
         break;
     }
     case Tcp::REQUESTS::LOAD_FILES:
     {
-        emit requestReceived(tr("список доступных файлов"));
+        emit requestReceived(tr("list of available files"));
         QStringList files = database->getXmlHandler()->getAvailableFiles();
         socket->sendRequest(Tcp::REQUESTS::LOAD_FILES, files.join(QChar('|')));
-        emit responseSent(tr("список доступных файлов "));
+        emit responseSent(tr("list of available files "));
         break;
     }
     }
@@ -152,26 +154,26 @@ void ThreadableClientWrapper::parseRequest(TcpSocketAdapter::REQUESTS requestId,
 void ThreadableClientWrapper::databaseUpdated()
 {
     socket->sendRequest(TcpSocketAdapter::REQUESTS::DATABASE_UPDATED);
-    emit responseSent(tr("список записей обновлен"));
+    emit responseSent(tr("list of records updated"));
 }
 
 void ThreadableClientWrapper::studentsDeleted(int amount)
 {
     QString data = QString::number(amount);
     socket->sendRequest(TcpSocketAdapter::REQUESTS::STUDENTS_DELETED, data);
-    emit responseSent(tr("удалено %1 записей").arg(amount));
+    emit responseSent(tr("%1 records deleted").arg(amount));
 }
 
 void ThreadableClientWrapper::invalidStudentInserted()
 {
     socket->sendRequest(TcpSocketAdapter::REQUESTS::INVALID_INSERTION);
-    emit responseSent(tr("добавление некорректной записи"));
+    emit responseSent(tr("add incorrect entry"));
 }
 
 void ThreadableClientWrapper::duplicateStudentInserted()
 {
     socket->sendRequest(TcpSocketAdapter::REQUESTS::DUPLICATE_INSERTION);
-    emit responseSent(tr("повторное добавление записи"));
+    emit responseSent(tr("re-add entry"));
 }
 
 TcpSocketAdapter* ThreadableClientWrapper::getSocketAdapter() const
