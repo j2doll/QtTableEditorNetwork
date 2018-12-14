@@ -3,7 +3,7 @@
 
 ## Forked and fixed 
 - forked from [MaxGavr/QtTableEditorNetwork](https://github.com/MaxGavr/QtTableEditorNetwork)
-- translate string to English. (I'll not pull request)
+- **translated string from русский язык to English** (I'll not pull request in original repo.)
 - Other changes have been made.
 
 ## Licenses and links
